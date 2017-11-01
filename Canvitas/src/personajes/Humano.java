@@ -18,7 +18,7 @@ import javax.swing.ImageIcon;
  * @author daza
  */
 public class Humano implements Personaje {
-    Image imagen = new ImageIcon(getClass().getResource("/imagenes/humano.png")).getImage();
+    Image imagen = new ImageIcon(getClass().getResource("/imagenes/volando.gif")).getImage();
     int xPos = 300 - imagen.getWidth(null);
     int yPos = 200 - imagen.getHeight(null);
     int rotation = 0;
@@ -68,4 +68,5 @@ public class Humano implements Personaje {
         rect = new Rectangle(xPos, yPos, imagen.getWidth(null), imagen.getHeight(null));
         return rect;
     }
+
 }

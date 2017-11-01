@@ -25,20 +25,21 @@ import java.util.TimerTask;
  */
 public class Decorator extends Canvas implements KeyListener{
     Universo universo;
-    Humano nave;
-    ArrayList<Personaje> rocas;
+    Humano human;
+    HumanoDecorado alitas;
+    ArrayList<Personaje> hongo;
     Image imgBuffer;
     Graphics miG;
     Timer timer;
     
     public Decorator(){
         universo = new Universo();
-        nave = new Humano();
-        rocas = new ArrayList<Personaje>();
+        human = new Humano();
+        hongo = new ArrayList<Personaje>();
         
         
         for(int i=0; i<2; i++)
-            rocas.add(new Roca());
+            hongo.add(new Hongo());
         
         timer = new Timer();
         setBounds(0, 0, 1000, 1000);
@@ -54,7 +55,7 @@ public class Decorator extends Canvas implements KeyListener{
     
     @Override
     public void paint(Graphics g){
-        Iterator<Personaje> it = rocas.iterator();
+        Iterator<Personaje> it = hongo.iterator();
         miG = imgBuffer.getGraphics();
 	universo.draw(miG);
         	
@@ -63,7 +64,7 @@ public class Decorator extends Canvas implements KeyListener{
             
         }
         
-        nave.draw(miG);
+        human.draw(miG);
         
         g.drawImage(imgBuffer, 0, 0, this);
     }
@@ -75,7 +76,7 @@ public class Decorator extends Canvas implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        nave.update(e.getKeyCode());
+        human.update(e.getKeyCode());
     }
 
     @Override
@@ -87,25 +88,30 @@ public class Decorator extends Canvas implements KeyListener{
 
         @Override
         public void run() {
-            Iterator<Personaje> it = rocas.iterator();
-            nave.update();           
+            Iterator<Personaje> it = hongo.iterator();
+            human.update();           
             while(it.hasNext()){
                 Personaje r = it.next();
                 r.update();
             }
             
-            Iterator<Personaje> it2 = rocas.iterator();
+            Iterator<Personaje> it2 = hongo.iterator();
             while(it2.hasNext()){
                 Personaje r = it2.next();
-        
-                if(r.getRect().intersects(nave.getRect()))
-                    rocas.remove(r);
-                
+                if(r.getRect().intersects(human.getRect())){
+                    hongo.remove(r);
+                   
+                   
+                    r.update();
+                    break;
+                }   
+         
     //volar personaje
                 
-              
                     
             }
+            
+            repaint();
         }
     }
 }
